@@ -1,4 +1,5 @@
-'use strict';
+/*jslint browser: true */
+/*global $, jQuery, tmpl */
 var testProgramming = {
     /**
      * Массив вопросов с вариантами ответов
@@ -46,11 +47,13 @@ var str = JSON.stringify(testProgramming);
 localStorage.setItem('testProgramming', str);
 testProgramming = $.parseJSON(localStorage.getItem('testProgramming'));
 
-$(function() {
+$(function () {
+    'use strict';
+    var i, j;
     //Генерируем текст из шаблона
     $('body').append(tmpl('test_template', testProgramming));
     //Вешаем обработчик на кнопку проверки теста
-    $('#check').click(function(event) {
+    $('#check').click(function (event) {
         var answerCorrect, i, j,
             correctAnswers = 0;
         event.preventDefault();
