@@ -47,13 +47,13 @@ var str = JSON.stringify(testProgramming);
 localStorage.setItem('testProgramming', str);
 testProgramming = $.parseJSON(localStorage.getItem('testProgramming'));
 
-$(function () {
+$(() => {
     'use strict';
     var i, j;
     //Генерируем текст из шаблона
     $('body').append(tmpl('test_template', testProgramming));
     //Вешаем обработчик на кнопку проверки теста
-    $('#check').click(function (event) {
+    $('#check').click(event => {
         var answerCorrect, i, j,
             correctAnswers = 0;
         event.preventDefault();
@@ -62,11 +62,11 @@ $(function () {
             for (var j = 0; j < testProgramming.questions[i].variants.length; ++j) {
                 if (
                     (!testProgramming.questions[i].variants[j].correct &&
-                        $('#checkbox_' + i + '_' + j).prop('checked')
+                        $(`#checkbox_${i}_${j}`).prop('checked')
                     ) ||
                     (
                         testProgramming.questions[i].variants[j].correct &&
-                        !$('#checkbox_' + i + '_' + j).prop('checked')
+                        !$(`#checkbox_${i}_${j}`).prop('checked')
                     )
                 ) {
                     // ответ неправильный
@@ -79,15 +79,13 @@ $(function () {
         }
         
         $('body').append(tmpl('modal_template', {
-            message: "Правильных ответов: " + correctAnswers + " из " + testProgramming.questions.length,
+            message: `Правильных ответов: ${correctAnswers} из ${testProgramming.questions.length}`,
             button: "Пройти тест заново"
         }));
 
-        $('.mask, #close').click(function(e) {
+        $('.mask, #close').click(e => {
             e.preventDefault();
-            $('.mask, .modal').fadeOut(500, function() {
-                $(this).remove();
-            });
+            $('.mask, .modal').fadeOut(500, () => $(this).remove());
             $('input[type=checkbox]').prop('checked', false);
         });
 
